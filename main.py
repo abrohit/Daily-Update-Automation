@@ -1,5 +1,8 @@
-import requests, datetime, json, os, dotenv
+import requests, datetime, json, os, dotenv, smtplib, ssl
 from pytz import timezone
+
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 import pickle
 from googleapiclient.discovery import build
@@ -21,6 +24,30 @@ def to_ist(Time):
 
     return(IST.time())
 
+def get_calendar_service():
+
+   SCOPES = ['https://www.googleapis.com/auth/calendar']
+   CREDENTIALS_FILE = 'calendar_client_secret.json'
+   
+   creds = None
+
+   with open('calendar_token.pickle', 'rb') as token:
+      creds = pickle.load(token)
+      
+   if not creds or not creds.valid:
+       if creds and creds.expired and creds.refresh_token:
+           creds.refresh(Request())
+       else:
+           flow = InstalledAppFlow.from_client_secrets_file(
+               CREDENTIALS_FILE, SCOPES)
+           creds = flow.run_local_server(port=0)
+
+       with open('calendar_oken.pickle', 'wb') as token:
+           pickle.dump(creds, token)
+
+   service = build('calendar_token.pickle', 'v3', credentials=creds)
+   return(service)
+
 
 def get_siege_update():
 
@@ -28,11 +55,11 @@ def get_siege_update():
     req = requests.get('https://api.pandascore.co/r6siege/matches/upcoming', params = {'token':token})
 
     if not req.json(): #api returns empty list if there is no upcoming game
-        print('empty')
+        pass
     else:
         pass
         
-    return()
+    return('')
 
 def get_f1_update():
 
@@ -65,37 +92,75 @@ def get_f1_update():
     
         return(Race_Dets)
 
-def get_calendar_service():
-
-   SCOPES = ['https://www.googleapis.com/auth/calendar']
-   CREDENTIALS_FILE = 'calendar_client_secret.json'
-   
-   creds = None
-
-   with open('calendar_token.pickle', 'rb') as token:
-      creds = pickle.load(token)
-      
-   if not creds or not creds.valid:
-       if creds and creds.expired and creds.refresh_token:
-           creds.refresh(Request())
-       else:
-           flow = InstalledAppFlow.from_client_secrets_file(
-               CREDENTIALS_FILE, SCOPES)
-           creds = flow.run_local_server(port=0)
-
-       with open('token.pickle', 'wb') as token:
-           pickle.dump(creds, token)
-
-   service = build('calendar_token.pickle', 'v3', credentials=creds)
-   return(service)
-
 def get_calendar_update():
     
-    service = get_calendar_service()
+    #service = get_calendar_service()
 
     now = datetime.datetime.now()
     today = now.date()
     current_year = now.year
     
+    return('')
+
+def send_mail(Body):
+    
+    sender = os.environ['Sender_Email']
+    password = os.environ['Sender_Password']
+    receiver = os.environ['Receiver_Email']
+
+    smtp_server = "smtp.gmail.com"
+    port = 587
+
+    context = ssl.create_default_context()
+
+    try:
+        server = smtplib.SMTP(smtp_server,port)
+        #server.ehlo() # Can be omitted
+        server.starttls(context=context) # Secure the connection
+        #server.ehlo() # Can be omitted
+        server.login(sender, password)
+        server.sendmail(sender, receiver, Body.as_string())
+    except Exception as error:
+        print(error)
+        server.quit()
     return()
-get_calendar_update()
+
+def main():
+
+    email_message = MIMEMultipart("alternative")
+    email_message["Subject"] = "Your Daily updates!"
+
+    html_start = """
+<html>
+  <body>
+  <p>Hey,<br>
+      Good Morning! This is what your day looks like:<br><br>
+"""
+    html_end = """
+Have a great day!
+<p>
+</body>
+</html>
+"""
+    html_body = ""
+    
+    Race_Dets = get_f1_update()
+    Siege_Dets = get_siege_update()
+    Calendar_Dets = get_calendar_update()
+
+    if Race_Dets != '':
+        html_body += "Its race day!! "+ Race_Dets['Race_Name'] + ". This is round "+Race_Dets['Round']+". It's happening at "+ Race_Dets['City']+", " + Race_Dets['Country'] + " at " + str(Race_Dets['Time'])+" IST"+" <br><br>"
+
+    if html_body == '':
+        html_body += "Looks like you've got nothing happening today! You're free to do whatever you want! Enjoy! <br><br>"
+
+    html = html_start + html_body + html_end
+
+    html_mime = MIMEText(html, "html")
+    email_message.attach(html_mime)
+    send_mail(email_message)
+
+
+if __name__ == "__main__": 
+    main() 
+    
