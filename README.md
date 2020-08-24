@@ -1,4 +1,4 @@
-<h3 align="center">Daily Update utomation</h3>
+<h2 align="center">Daily Update utomation</h2>
 <p align="center">
   An awesome tool to update you with your schedule every morning!
  </p>
