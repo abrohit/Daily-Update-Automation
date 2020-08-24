@@ -26,4 +26,6 @@ Distributed under the MIT License. See `LICENSE` for more information.
 ## Contact
 Twitter : [abrohit05](https://twitter.com/abrohit05)
 
+linkedIn : [Rohit Manjunath](https://www.linkedin.com/in/rohitmanjunath/)
+
 Project Link : [https://github.com/abrohit/Daily-Update-Automation](https://github.com/abrohit/Daily-Update-Automation)
