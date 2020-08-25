@@ -1,4 +1,4 @@
-<h2 align="center">Daily Update Automation</h2>
+<h1 align="center">Daily Update Automation</h1>
 <p align="center">
   An awesome tool to update you with your schedule every morning!
  </p>
