@@ -3,7 +3,7 @@
   An awesome tool to update you with your schedule every morning!
  </p>
 
-Work in progress!
+Work in progress! F1 race updates work. working on the rest. Will be built soon!
 
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents
