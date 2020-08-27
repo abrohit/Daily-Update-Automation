@@ -3,7 +3,7 @@
   An awesome tool to update you with your schedule every morning!
  </p>
 
-Work in progress! F1 race updates and University Holiday works. Will be built soon!
+Work in progress! F1 race updates and University holiday notification works. Will be built soon!
 
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents
