@@ -1,5 +1,4 @@
 import requests, datetime, json, os, dotenv, smtplib, ssl
-from pytz import timezone
 
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -9,7 +8,6 @@ from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 
-import bs4 as bs
 from bs4 import BeautifulSoup
 from urllib.request import Request, urlopen
 
@@ -121,9 +119,7 @@ def get_f1_update():
         Race_Dets['Race_Name'] = race['raceName']
         Race_Dets['City'] = race['Circuit']['Location']['locality']
         Race_Dets['Country'] = race['Circuit']['Location']['country']
-
-        time = race['time']
-        Race_Dets['Time'] = to_ist(time)
+        Race_Dets['Time'] = to_ist(race['time'])
     
         return(Race_Dets)
 
