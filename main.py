@@ -9,6 +9,10 @@ from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 
+import bs4 as bs
+from bs4 import BeautifulSoup
+from urllib.request import Request, urlopen
+
 dotenv_file = os.path.join('.env')
 if os.path.isfile(dotenv_file):
     dotenv.load_dotenv(dotenv_file)
@@ -23,6 +27,34 @@ def to_ist(Time):
     IST = Time_Format + datetime.timedelta(hours = Diff)
 
     return(IST.time())
+
+def get_uni_holidays():
+
+    now = datetime.datetime.now()
+    current_year = str(now.year)
+
+    day = str(now.strftime("%A"))
+    month = str(now.strftime('%B'))
+    date = (str(now.date()).split('-'))[2] # Gets only the Date example: 1 or 2 or 23
+
+    today = day + ', ' + month + ' ' + date + ', ' + current_year
+    
+    url = 'https://uhr.rutgers.edu/'+current_year+'-university-holiday-and-closings-schedule'
+    req = Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+    sauce = urlopen(req).read()
+    soup=BeautifulSoup(sauce,'lxml')
+
+    table=soup.find('table')
+    table_rows = table.find_all('tr')
+
+    for item in table_rows:
+        td = item.find_all('td')
+        row = ([i.text for i in td])[0:2]
+        if row[1] == today:
+            return(row[0])
+
+    return('')
+
 
 def get_calendar_service():
 
@@ -61,9 +93,6 @@ def get_siege_update():
         today = now.date()
 
         #matches = req
-        
-    else:
-        return('')
         
     return('')
 
@@ -153,6 +182,10 @@ Have a great day!
     Race_Dets = get_f1_update()
     Siege_Dets = get_siege_update()
     Calendar_Dets = get_calendar_update()
+    Holiday_Dets = get_uni_holidays()
+
+    if Holiday_Dets != '':
+        html += "Today is a Holiday!!! It's " + Holiday_Dets + " <br><br>"
 
     if Race_Dets != '':
         html_body += "Its race day!! "+ Race_Dets['Race_Name'] + ". This is round "+Race_Dets['Round']+". It's happening at "+ Race_Dets['City']+", " + Race_Dets['Country'] + " at " + str(Race_Dets['Time'])+" IST"+" <br><br>"
@@ -173,8 +206,6 @@ Have a great day!
     send_mail(email_message)
 
 
-if __name__ == "__main__": 
+if __name__ == "__main__":
     main()
-
-    #https://uhr.rutgers.edu/2020-university-holiday-and-closings-schedule
     
