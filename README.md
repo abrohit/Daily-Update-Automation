@@ -1,9 +1,9 @@
-<h2 align="center">Daily Update Automation</h2>
+<h1 align="center">Daily Update Automation</h1>
 <p align="center">
   An awesome tool to update you with your schedule every morning!
  </p>
 
-Work in progress!
+Work in progress! F1 race updates work. working on the rest. Will be built soon!
 
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents
