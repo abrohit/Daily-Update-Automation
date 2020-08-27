@@ -49,7 +49,7 @@ def get_uni_holidays():
 
     for item in table_rows:
         td = item.find_all('td')
-        row = ([i.text for i in td])[0:2]
+        row = ([i.text for i in td])
         if row[1] == today:
             return(row[0])
 
