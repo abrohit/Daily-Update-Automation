@@ -52,12 +52,18 @@ def get_calendar_service():
 def get_siege_update():
 
     token = os.environ['Siege_Token']
-    req = requests.get('https://api.pandascore.co/r6siege/matches/upcoming', params = {'token':token})
+    url = 'https://api.pandascore.co/r6siege/matches/upcoming'
+    req = (requests.get(url, params = {'token':token})).json()
 
-    if not req.json(): #api returns empty list if there is no upcoming game
-        pass
+    if not req: #api returns empty list if there is no upcoming game
+
+        now = datetime.datetime.now()
+        today = now.date()
+
+        #matches = req
+        
     else:
-        pass
+        return('')
         
     return('')
 
@@ -151,6 +157,12 @@ Have a great day!
     if Race_Dets != '':
         html_body += "Its race day!! "+ Race_Dets['Race_Name'] + ". This is round "+Race_Dets['Round']+". It's happening at "+ Race_Dets['City']+", " + Race_Dets['Country'] + " at " + str(Race_Dets['Time'])+" IST"+" <br><br>"
 
+    if Siege_Dets != '':
+        pass
+
+    if Calendar_Dets != '':
+        pass
+
     if html_body == '':
         html_body += "Looks like you've got nothing happening today! You're free to do whatever you want! Enjoy! <br><br>"
 
@@ -162,5 +174,7 @@ Have a great day!
 
 
 if __name__ == "__main__": 
-    main() 
+    main()
+
+    #https://uhr.rutgers.edu/2020-university-holiday-and-closings-schedule
     
