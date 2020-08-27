@@ -15,7 +15,7 @@ Work in progress! F1 race updates and University holiday notification works. Wil
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-When I wake up, I like to know what my day looks like. What are the activities that are scheduled today? What are some of the tasks I need to complete today? Do I have any mettings/classes today? Do I have any games to watch today? or is it race day? To solve this problem, I wrote a piece of code in python to read my google calendar, F1 race updates, Holidays provided by my university, and Rainbow six siege(videogame) schedule and send me an email every morning. This is completely built with python!!
+When I wake up, I like to know what my day looks like to prepare for it. What are the activities that are scheduled today? What are some of the tasks I need to complete today? Do I have any meetings/classes today? Do I have any games to watch today? Or is it race day? To solve this problem, I wrote a piece of code in python to read my google calendar, F1 race updates, Holidays provided by my university, and Rainbow six siege(videogame) Pro League schedule and send me an email every morning. This project is completely built with python!!
 
 ### So far the project involves:
 * Webscraping.
