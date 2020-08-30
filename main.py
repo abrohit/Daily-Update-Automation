@@ -36,7 +36,7 @@ def get_uni_schedule():
 
     try:
         return(data[day])
-    except KeyError:
+    except KeyError: # Will return KeyError when it's Sunday or Saturday
         return('')
 
     
