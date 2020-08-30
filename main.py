@@ -39,8 +39,6 @@ def get_uni_schedule():
     except KeyError: # Will return KeyError when it's Sunday or Saturday
         return('')
 
-    
-
 def get_uni_holidays():
 
     now = datetime.datetime.now()
