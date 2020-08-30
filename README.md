@@ -24,10 +24,10 @@ When I wake up, I would like to know what my day looks like to prepare for it. W
 #### Class Schedule
 Since all my classes are currently online due to COVID-19, keeping track of my classes is challenging due to the different timezones. Hence to make this easy, this program reads my schedule in JSON format and sends me the class I have that particular day!
 
-#### Universuty Hoilday
+#### University Hoilday
 This is to let me know if that particular day is a declared holiday by my university by scraping their website page for holidays.
 
-#### F1 updates
+#### F1 Updates
 I love F1, even though I know the race schedule beforehand, it is nice to get an email in the morning alerting me about race day! Any F1 fan who wants this feature, too, can copy the ```get_f1_update()``` function. 
 
 ### So far the project involves:
