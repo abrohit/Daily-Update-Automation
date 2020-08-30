@@ -97,12 +97,14 @@ def get_siege_update():
 def get_f1_update():
 
     now = datetime.datetime.now()
-    today = now.date()
+    today = str(now.date())
     current_year = now.year
 
     url = 'https://ergast.com/api/f1/'+ str(current_year)+'.json'
     req = (requests.get(url)).json()
     races = req['MRData']['RaceTable']['Races']#gets data of races for this year
+
+    race = ''
 
     for item in races:
 
@@ -110,18 +112,21 @@ def get_f1_update():
         
         if today == race_date:
             race = item
-        else:
-            race=''
-            return(race)
 
+    if race != '':
+        
         Race_Dets = dict()#creates dict to store race data
         Race_Dets['Round'] = race['round']
         Race_Dets['Race_Name'] = race['raceName']
         Race_Dets['City'] = race['Circuit']['Location']['locality']
         Race_Dets['Country'] = race['Circuit']['Location']['country']
         Race_Dets['Time'] = to_ist(race['time'])
-    
+        
         return(Race_Dets)
+    
+    else:
+        
+        return(race)
 
 def get_calendar_update():
     
