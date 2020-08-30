@@ -26,14 +26,29 @@ def to_ist(Time):
 
     return(IST.time())
 
+def get_uni_schedule():
+
+    now = datetime.datetime.now()
+    day = str(now.strftime("%A"))
+
+    with open('Timetable.json') as f:
+        data = json.load(f)
+
+    try:
+        return(data[day])
+    except KeyError:
+        return('')
+
+    
+
 def get_uni_holidays():
 
     now = datetime.datetime.now()
     current_year = str(now.year)
 
-    day = str(now.strftime("%A"))
-    month = str(now.strftime('%B'))
-    date = (str(now.date()).split('-'))[2] # Gets only the Date example: 1 or 2 or 23
+    day = str(now.strftime("%A")) # Gets the current day of the week, example: Monday, Tuesday...
+    month = str(now.strftime('%B'))# Gets the current month, example: August, October....
+    date = (str(now.date()).split('-'))[2] # Gets only the Date, example: 1 or 2 or 23
 
     today = day + ', ' + month + ' ' + date + ', ' + current_year
     
@@ -184,9 +199,18 @@ Have a great day!
     Siege_Dets = get_siege_update()
     Calendar_Dets = get_calendar_update()
     Holiday_Dets = get_uni_holidays()
+    Schedule_Dets = get_uni_schedule()
 
     if Holiday_Dets != '':
-        html += "Today is a Holiday!!! It's " + Holiday_Dets + " <br><br>"
+        html_body += "Today is a Holiday!!! It's " + Holiday_Dets + "!!!" + " <br><br>"
+
+    if Schedule_Dets != '' and Holiday_Dets == '':
+
+        html_body += "These are the classes lined up for the day: <br><ul>"
+
+        for item in Schedule_Dets:
+            html_body += "<li>" + str(item) + " at " + str(Schedule_Dets[item])+"</li>"
+        html_body += "</ul><br><br>"
 
     if Race_Dets != '':
         html_body += "Its race day!! "+ Race_Dets['Race_Name'] + ". This is round "+Race_Dets['Round']+". It's happening at "+ Race_Dets['City']+", " + Race_Dets['Country'] + " at " + str(Race_Dets['Time'])+" IST"+" <br><br>"
