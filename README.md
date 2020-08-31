@@ -22,7 +22,7 @@ When I wake up, I would like to know what my day looks like to prepare for it. W
 ### Features
 
 #### Class Schedule
-Since all my classes are currently online due to COVID-19, keeping track of my classes is challenging due to the different timezones. Hence to make this easy, this program reads my schedule in JSON format and sends me the class I have that particular day!
+Since all my classes are currently online due to COVID-19, keeping track of my classes is challenging due to the different timezones. Hence to make this easy, this program reads my schedule in JSON format and sends me the classes I have that particular day!
 
 #### University Hoilday
 This is to let me know if that particular day is a declared holiday by my university by scraping their website page for holidays.
