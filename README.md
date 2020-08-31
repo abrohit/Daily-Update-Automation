@@ -9,7 +9,7 @@ Work in progress! F1 race updates, Class schedule, and University holiday notifi
 ## Table of Contents
 * [About the Project](#about-the-project)
   * [Features](#features)
-  * [Project Involves](#so-far-the-project-involves)
+  * [So Far The Project Involves](#so-far-the-project-involves)
 * [License](#license)
 * [Contact](#contact)
 
