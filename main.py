@@ -23,7 +23,6 @@ def to_ist(Time):
     Diff = 5.5 #IST time difference from UTC
 
     IST = Time_Format + datetime.timedelta(hours = Diff)
-
     return(IST.time())
 
 def get_uni_schedule():
@@ -94,18 +93,44 @@ def get_calendar_service():
 
 def get_siege_update():
 
+    Team_to_follow = "G2 Esports"
+
     token = os.environ['Siege_Token']
     url = 'https://api.pandascore.co/r6siege/matches/upcoming'
     req = (requests.get(url, params = {'token':token})).json()
-
-    if not req: #api returns empty list if there is no upcoming game
-
+    
+    if req: #api returns empty list if there is no upcoming game
+        
         now = datetime.datetime.now()
         today = now.date()
-
-        #matches = req
         
-    return('')
+        for item in req:
+            
+            match_scheduled = (item['scheduled_at']).split("T")#splits time and date
+            match_date = match_scheduled[0]
+            
+            if today == match_date:#checks if there is a game today
+
+                teams_data = item['opponents']
+                team_names = []
+                
+                for item_two in teams_data:
+                    team_names.append(item_two['opponent']['name'])#gets the name of both teams playing today
+
+                if (Team_to_follow in team_names):#checks if your favourite team is playing today
+
+                    Game_Dets = dict()
+
+                    Game_Dets['League_Name'] = item['league']['slug']
+                    Game_Dets['Match_Name'] = item['name']
+                    Game_Dets['Time'] = str(to_ist(match_scheduled[1]))
+
+                    return(Game_Dets)
+
+            else:
+                return('')
+    else:
+        return('')
 
 def get_f1_update():
 
@@ -133,7 +158,7 @@ def get_f1_update():
         Race_Dets['Race_Name'] = race['raceName']
         Race_Dets['City'] = race['Circuit']['Location']['locality']
         Race_Dets['Country'] = race['Circuit']['Location']['country']
-        Race_Dets['Time'] = to_ist(race['time'])
+        Race_Dets['Time'] = str(to_ist(race['time']))
         
         return(Race_Dets)
     
@@ -204,17 +229,17 @@ Have a great day!
 
     if Schedule_Dets != '' and Holiday_Dets == '':
 
-        html_body += "These are the classes lined up for the day: <br><ul>"
+        html_body += "You have these classes lined up for the day: <br><ul>"
 
         for item in Schedule_Dets:
             html_body += "<li>" + str(item) + " at " + str(Schedule_Dets[item])+"</li>"
-        html_body += "</ul><br><br>"
+        html_body += "</ul><br>"
 
     if Race_Dets != '':
         html_body += "Its race day!! "+ Race_Dets['Race_Name'] + ". This is round "+Race_Dets['Round']+". It's happening at "+ Race_Dets['City']+", " + Race_Dets['Country'] + " at " + str(Race_Dets['Time'])+" IST"+" <br><br>"
 
     if Siege_Dets != '':
-        pass
+        html_body += "It's Siege day!! It's time for "+ Siege_Dets['League_Name'] + ". " + Siege_Dets['Match_Name'] + " at " + Siege_Dets['Time'] + " IST" + " <br><br>"
 
     if Calendar_Dets != '':
         pass
@@ -231,4 +256,3 @@ Have a great day!
 
 if __name__ == "__main__":
     main()
-    
