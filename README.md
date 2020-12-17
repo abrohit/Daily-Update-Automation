@@ -3,8 +3,6 @@
   An awesome tool to update you with your schedule every morning!
  </p>
 
-Work in progress! F1 race updates, Class schedule, R6s updates, and University holiday notification works. Will be completely built soon!
-
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents
 * [About the Project](#about-the-project)
