@@ -6,8 +6,7 @@
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents
 * [About the Project](#about-the-project)
-  * [Features](#features)
-  * [So Far The Project Involves](#so-far-the-project-involves)
+* [Tech Stack](#tech-stack)
 * [License](#license)
 * [Contact](#contact)
 
@@ -28,7 +27,7 @@ This is to let me know if that particular day is a declared holiday by my univer
 #### F1 Updates
 I love F1, even though I know the race schedule beforehand, it is nice to get an email in the morning alerting me about race day! Any F1 fan who wants this feature, too, can copy the ```get_f1_update()``` function. 
 
-### So far the project involves:
+### Tech Stack:
 * Webscraping.
 * Interacting with multiple APIs.
 * Interacting with JSON files.
